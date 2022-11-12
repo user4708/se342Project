@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import styles from '../shared/styles';
-import axios from "axios";
 
 export default function LoginScreen({ navigation }) {
 

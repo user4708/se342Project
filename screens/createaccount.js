@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { Text, TextInput, TouchableOpacity, View, Image } from 'react-native';
 import styles from '../shared/styles';
@@ -9,39 +10,44 @@ export default function createAccountScreen({ navigation }) {
   const [validPass, inputValidPass] = React.useState("");
   const [fName, inputFName] = React.useState("");
   const [lName, inputLName] = React.useState("");
-  const [mInit, inputMInit] = React.useState("");
-  const [bDay, inputbDay] = React.useState("");
-//  const [isSubmit, setSubmit] = React.useState(false);
 
-  const pressHandler = () => {
+  const bringLoginScreen = () => {
     navigation.navigate('Login')
   }
 
-  // React.useEffect(() => {
-  //   const authenticate = async() => {
-  //     axios.post(link, JSON.stringify({
-  //       username: user,
-  //       password: pass,
-  //       f_name: fName,
-  //       mi: mInit,
-  //       l_name: lName,
-  //       birthdate: bDay
-  //     })
-  //     )
-  //     .then((response) => {
-  //       setSubmit(false);
-  //       console.log(response);
-  //     }).catch((err) => {
-  //      console.log(err);
-  //     });
-  //   };
-  //   if (isSubmit) authenticate();
-  // }, [isSubmit]);
+  function handleSignup(){
 
-  // const usernameHandler = (text) => {
-  //   //validate here
-  //   inputUser(text);
-  // }
+    if(user == "" || pass == "" || fName == "" || lName == ""){
+      console.log("Null values.")
+      // throw alert here
+    }else if(pass != validPass){
+      console.log("Passwords do not match.")
+      // throw alert here
+    }
+    else{
+      // conditions met psot to DB
+      console.log(user);
+      console.log(pass);
+      console.log(fName);
+      console.log(lName);
+
+      console.log("Sending to DB.")
+      axios.post('http://192.168.1.181:4545', {
+        user: user,
+        pass: pass,
+        fName: fName,
+        lName: lName,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+      navigation.navigate('Login')
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -54,21 +60,21 @@ export default function createAccountScreen({ navigation }) {
           onChangeText={inputFName}
           placeholder={"First Name"}
         />
-        <TextInput 
+        {/* <TextInput 
           style={styles.input1}
           onChangeText={inputMInit}
           placeholder={"Middle Initial"}
-        />
+        /> */}
         <TextInput 
           style={styles.input1}
           onChangeText={inputLName}
           placeholder={"Last Name"}
         />
-        <TextInput 
+        {/* <TextInput 
           style={styles.input1}
           onChangeText={inputbDay}
           placeholder={"Birthdate"}
-        />
+        /> */}
         <Text style={styles.headerText}>Account Information</Text>
         <View style={styles.horizontalLine}></View>
         <TextInput 
@@ -80,17 +86,19 @@ export default function createAccountScreen({ navigation }) {
           style={styles.input1}
           onChangeText={inputPass}
           placeholder={"Password"}
+          //secureTextEntry={true}
         />
         <TextInput 
           style={styles.input1}
           onChangeText={inputValidPass}
           placeholder={"Validate Password"}
+          //secureTextEntry={true}
         />
-        <TouchableOpacity style={styles.loginButton} onPress={pressHandler}>
+        <TouchableOpacity style={styles.loginButton} onPress={handleSignup}>
           <Text style={styles.loginText}>Submit</Text>
         </TouchableOpacity>
         <Text style={styles.createNewText}>Returning User?</Text>
-        <TouchableOpacity onPress={pressHandler/*() => setSubmit(true)*/}>
+        <TouchableOpacity onPress={bringLoginScreen}>
           <Text style={styles.clickableText}>Login</Text>
         </TouchableOpacity>
       </View>
