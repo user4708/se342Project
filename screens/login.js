@@ -1,15 +1,58 @@
 import React, { useEffect } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import styles from '../shared/styles';
+import axios from 'axios';
 
 export default function LoginScreen({ navigation }) {
 
   const [user, inputUser] = React.useState("");
   const [pass, inputPass] = React.useState("");
+  const [data, setData] = React.useState([]);
 
-  const pressHandler = () => {
-    console.log(user, pass);
-    navigation.navigate('Home');
+  useEffect(() => {
+    // initial grab when app is loaded to set users info in database to data array
+    axios.get('http://192.168.1.181:4545/accounts')
+    .then((response) => {
+      const myObjects = response.data;
+      setData(myObjects);
+    });
+    console.log(data);
+
+  }, [])
+
+  function getData(){
+    axios.get('http://192.168.1.181:4545/accounts')
+    .then((response) => {
+      const myObjects = response.data;
+      setData(myObjects);
+    });
+    console.log(data);
+  }
+
+  function loginHandler(){
+
+    getData();
+
+    if(user == "" || pass == ""){
+      console.log("Username or password was null value.")
+    }else{
+      for(let i = 0; i < data.length; i++){
+        if(user == data[i].username){
+          console.log("Username found at index ", i);
+          const userFound = true;
+          if(userFound){
+            // validate password
+            if(pass == data[i].password){
+              // login succesful
+              console.log("Login succesful as user: ", user);
+              navigation.navigate('Home');
+            }else{
+              console.log("Invalid password for user: ", user);
+            }
+        }
+        }
+      }
+    }
   }
 
   const pressHandler1 = () => {
@@ -40,7 +83,7 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity onPress={pressHandler1}>
           <Text style={styles.clickableText}>Create Account</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButton} onPress={pressHandler}>
+        <TouchableOpacity style={styles.loginButton} onPress={loginHandler}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
       </View>

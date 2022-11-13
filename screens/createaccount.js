@@ -10,6 +10,7 @@ export default function createAccountScreen({ navigation }) {
   const [validPass, inputValidPass] = React.useState("");
   const [fName, inputFName] = React.useState("");
   const [lName, inputLName] = React.useState("");
+  const [data, setData] = React.useState([]);
 
   const bringLoginScreen = () => {
     navigation.navigate('Login')
@@ -25,7 +26,7 @@ export default function createAccountScreen({ navigation }) {
       // throw alert here
     }
     else{
-      // conditions met psot to DB
+      // conditions met post to DB
       console.log(user);
       console.log(pass);
       console.log(fName);
@@ -45,7 +46,7 @@ export default function createAccountScreen({ navigation }) {
         console.log(error);
       });
 
-      navigation.navigate('Login')
+      navigation.navigate('Login');
     }
   }
 
