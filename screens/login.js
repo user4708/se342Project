@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Text, View, Image, TextInput, TouchableOpacity, Button } from 'react-native';
 import styles from '../shared/styles';
 import axios from 'axios';
-import * as ImagePicker from 'expo-image-picker';
 
 export default function LoginScreen({ navigation }) {
 
@@ -79,6 +78,7 @@ export default function LoginScreen({ navigation }) {
           onChangeText={inputPass}
           placeholder={"Password"}
           maxLength={16}
+          secureTextEntry={true}
         />
         <TouchableOpacity>
           <Text style={styles.clickableText}>Forgot Password?</Text>

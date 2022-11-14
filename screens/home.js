@@ -38,7 +38,7 @@ export default function HomeScreen({ navigation }) {
         <Text style={styles.smallerHeaderText}>Home</Text>
       </View>
       <View style={styles.homeContainer}>
-        <Button title="Pick an image from camera roll" onPress={pickImage} />
+        <Button title="Pick an image to upload." onPress={pickImage} />
         {image0 && <Image source={{ uri: image0 }} style={{ width: 200, height: 200 }} />}
         {image1 && <Image source={{ uri: image1 }} style={{ width: 200, height: 200 }} />}
       </View>
