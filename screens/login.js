@@ -9,25 +9,7 @@ export default function LoginScreen({ navigation }) {
   const [user, inputUser] = React.useState("");
   const [pass, inputPass] = React.useState("");
   const [data, setData] = React.useState([]);
-//  const [image, setImage] = React.useState(null);
   const [errorText, setText] = React.useState("");
-
-  // const pickImage = async () => {
-  //   // No permissions request is necessary for launching the image library
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsMultipleSelection: true,
-  //     aspect: [4, 3],
-  //     quality: 1,
-  //   });
-
-  //   console.log(result);
-  //   console.log(result.assets);
-
-  //   if (!result.canceled) {
-  //     setImage(result.assets[0].uri);
-  //   }
-  // };
 
   useEffect(() => {
     // initial grab when app is loaded to set users info in database to data array
@@ -108,11 +90,7 @@ export default function LoginScreen({ navigation }) {
         <TouchableOpacity style={styles.loginButton} onPress={loginHandler}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
-        {errorText && <Text style={styles.errorText}>{errorText}</Text>}
-        {/* <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <Button title="Pick an image from camera roll" onPress={pickImage} />
-          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
-        </View> */}
+        <Text style={styles.errorText}>{errorText}</Text>
       </View>
     </View>
   )

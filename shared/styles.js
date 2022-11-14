@@ -113,13 +113,14 @@ const styles = StyleSheet.create({
   viewBottomBorder: {
     borderBottomWidth: 2,
     width: '100%',
-    borderColor: 'black'
+    borderColor: 'black',
   },
   viewRightBorder: {
     borderRightWidth: 2,
     width: 160,
     height: '100%',
-    borderColor: 'black'
+    borderColor: 'black',
+    backgroundColor: '#658bc9',
   },
   viewLeftBorder: {
     borderLeftWidth: 2,
@@ -128,13 +129,22 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     position: 'absolute',
     right: 1,
-    marginTop: 125
+    marginTop: 125,
+    backgroundColor: '#658bc9',
   },
   errorText: {
     color: '#b51010',
     padding: 5,
     fontSize: 18,
     alignSelf: 'center',
+  },
+  homeContainer: {
+    color: 'black',
+    height: '100%',
+    width: '70%',
+    position: "absolute",
+    marginLeft: 200,
+    marginTop: 135,
   }
 });
 
