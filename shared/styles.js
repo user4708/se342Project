@@ -129,6 +129,12 @@ const styles = StyleSheet.create({
     position: 'absolute',
     right: 1,
     marginTop: 125
+  },
+  errorText: {
+    color: '#b51010',
+    padding: 5,
+    fontSize: 18,
+    alignSelf: 'center',
   }
 });
 

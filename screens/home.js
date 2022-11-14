@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, Image, TouchableOpacity } from 'react-native';
 import styles from '../shared/styles';
-//import Icon from 'react-native-vector-icons/Ionicons'
 
 export default function HomeScreen({ navigation }) {
 
