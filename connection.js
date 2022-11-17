@@ -43,7 +43,7 @@ app.get('/accounts', function(req, res){
   });
 });
 
-app.post('', (req, res) => {
+app.post('/acc', (req, res) => {
   const user = req.body.user;
   const pass = req.body.pass;
   const fName = req.body.fName;
