@@ -7,18 +7,13 @@ export default function LoginScreen({ navigation }) {
 
   const [user, inputUser] = React.useState("");
   const [pass, inputPass] = React.useState("");
+  const account = {user, pass};
   const [data, setData] = React.useState([]);
   const [errorText, setText] = React.useState("");
 
   useEffect(() => {
     // initial grab when app is loaded to set users info in database to data array
-    axios.get('http://192.168.1.181:4545/accounts')
-    .then((response) => {
-      const myObjects = response.data;
-      setData(myObjects);
-    });
-    console.log(data);
-
+    getData()
   }, [])
 
   function getData(){
@@ -47,7 +42,7 @@ export default function LoginScreen({ navigation }) {
             if(pass == data[i].password){
               // login succesful
               console.log("Login succesful as user: ", user);
-              navigation.navigate('Home');
+              HomeNav();
             }else{
               setText("Invalid password for user");
               console.log("Invalid password for user: ", user);
@@ -58,8 +53,12 @@ export default function LoginScreen({ navigation }) {
     }
   }
 
-  const pressHandler1 = () => {
+  function creAccNav(){
     navigation.navigate('CreateAccount');
+  }
+
+  function HomeNav(){
+    navigation.push('Home', account);
   }
 
   return (
@@ -84,7 +83,7 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.clickableText}>Forgot Password?</Text>
         </TouchableOpacity> */}
         <Text style={styles.createNewText}>New?</Text>
-        <TouchableOpacity onPress={pressHandler1}>
+        <TouchableOpacity onPress={creAccNav}>
           <Text style={styles.clickableText}>Create Account</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.loginButton} onPress={loginHandler}>

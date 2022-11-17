@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, Image, TouchableOpacity, Button } from 'react-native';
 import styles from '../shared/styles';
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 
 export default function HomeScreen({ navigation }) {
 
-  const [image0, setImage0] = React.useState(null);
-  const [image1, setImage1] = React.useState(null);
+  const [imageURI, setImage0] = React.useState(null);
+  const [data, setData] = React.useState([]);
+  const user = navigation.getParam('user');
+
+  // useEffect(() => {
+  //   getData()
+  // }, [])
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsMultipleSelection: true,
+      allowsMultipleSelection: false,
       aspect: [4, 3],
       quality: 1,
     });
@@ -21,35 +27,54 @@ export default function HomeScreen({ navigation }) {
 
     if (!result.canceled) {
       setImage0(result.assets[0].uri);
-      setImage1(result.assets[1].uri);
     }
   };
 
+  function storageHandler(){
+
+    console.log("Sending IMG to DB.")
+    axios.post('http://192.168.1.181:4545/imgfile', {
+      user: user,
+      imageURI: imageURI,
+    })
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+  };
+
+  function getData(){
+    axios.get('http://192.168.1.181:4545/imagefiles')
+    .then((response) => {
+      const myObjects = response.data;
+      setData(myObjects);
+    });
+    console.log(data);
+  };
+
+  function testing(){
+    setImage0(data[0].imageURI);
+  }
+
   return (
     <View style={styles.container}>
+
       <View style={styles.viewBottomBorder}>
         <Image style={styles.smallLogo} source={require('../assets/cloudupload.png')}/>
         <Text style={styles.titleText1}>File System Home</Text>
       </View>
-      <View style={styles.viewRightBorder}>
-        <Text style={styles.headerText}>Structure</Text>
-        <View style={styles.smallerHorizontalLine}></View>
-        {/* <Icon name="Home" size={20} /> */}
-        <Text style={styles.smallerHeaderText}>Home</Text>
-      </View>
-      <View style={styles.homeContainer}>
+
+      <View>
+        <Button title="test" onPress={testing} />
+        <Button title="senddata" onPress={storageHandler} />
+        <Button title="getdata" onPress={getData} />
         <Button title="Pick an image to upload." onPress={pickImage} />
-        {image0 && <Image source={{ uri: image0 }} style={{ width: 200, height: 200 }} />}
-        {image1 && <Image source={{ uri: image1 }} style={{ width: 200, height: 200 }} />}
+        {imageURI && <Image source={{ uri: imageURI }} style={{ width: 200, height: 200 }} />}
       </View>
-      {/* <View style={styles.viewLeftBorder}>
-        <Text style={styles.headerText}>Sorting</Text>
-        <View style={styles.smallerHorizontalLine}></View>
-        <Text style={styles.smallerHeaderText}>Name</Text>
-        <Text style={styles.smallerHeaderText}>Files First</Text>
-        <Text style={styles.smallerHeaderText}>Folders First</Text>
-        <Text style={styles.smallerHeaderText}>Last Opened</Text> 
-      </View> */}
+
     </View>
   )
 }

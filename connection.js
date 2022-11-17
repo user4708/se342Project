@@ -59,3 +59,29 @@ app.post('/acc', (req, res) => {
     }
   )
 });
+
+app.get('/imagefiles', function(req, res){
+  conn.query('select * from imagefiles', function(error, rows, fields){
+    if(error){
+      console.log(error);
+    }else{
+      console.log(rows);
+      res.send(rows);
+    }
+  });
+});
+
+app.post('/imgfile', (req, res) => {
+  const user = req.body.user;
+  const imageURI = req.body.imageURI;
+
+  conn.query('INSERT INTO `imagefiles` (id, user, imageURI, dateTime) VALUES (?, ?, ?, ?)', 
+  [null, user, imageURI, null], (err, result) => {
+      if(err) {
+        console.log(err)
+      } else {
+        res.send("Values Inserted");
+      }
+    }
+  )
+});
