@@ -6,8 +6,8 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
-app.use(bodyParser.json({type:'application/json'}));
-app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json({type:'application/json', limit: '50mb'}));
+app.use(bodyParser.urlencoded({extended:true, limit: '50mb'}));
 app.use(express.json());
 
 const conn = mysql.createConnection({
@@ -74,9 +74,11 @@ app.get('/imagefiles', function(req, res){
 app.post('/imgfile', (req, res) => {
   const user = req.body.user;
   const imageURI = req.body.imageURI;
+  const imageHeight = req.body.imageHeight;
+  const imageWidth = req.body.imageWidth;
 
-  conn.query('INSERT INTO `imagefiles` (id, user, imageURI, dateTime) VALUES (?, ?, ?, ?)', 
-  [null, user, imageURI, null], (err, result) => {
+  conn.query('INSERT INTO `imagefiles` (id, user, imageURI, imageHeight, imageWidth, dateTime) VALUES (?, ?, ?, ?, ?, ?)', 
+  [null, user, imageURI, imageHeight, imageWidth, null], (err, result) => {
       if(err) {
         console.log(err)
       } else {
