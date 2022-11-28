@@ -145,7 +145,16 @@ const styles = StyleSheet.create({
     position: "absolute",
     marginLeft: 200,
     marginTop: 135,
-  }
+  },
+  headerText1: {
+    fontSize: 20,
+    alignSelf: 'left',
+    position: 'absolute',
+    marginLeft: 30
+  },
+  headerText2: {
+    fontSize: 20,
+  },
 });
 
 export default styles;

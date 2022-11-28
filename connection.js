@@ -77,8 +77,8 @@ app.post('/imgfile', (req, res) => {
   const imageHeight = req.body.imageHeight;
   const imageWidth = req.body.imageWidth;
 
-  conn.query('INSERT INTO `imagefiles` (id, user, imageURI, imageHeight, imageWidth, dateTime) VALUES (?, ?, ?, ?, ?, ?)', 
-  [null, user, imageURI, imageHeight, imageWidth, null], (err, result) => {
+  conn.query('INSERT INTO `imagefiles` (id, user, imageURI, imageHeight, imageWidth) VALUES (?, ?, ?, ?, ?)', 
+  [null, user, imageURI, imageHeight, imageWidth], (err, result) => {
       if(err) {
         console.log(err)
       } else {
