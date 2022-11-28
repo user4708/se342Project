@@ -87,13 +87,13 @@ export default function createAccountScreen({ navigation }) {
           style={styles.input1}
           onChangeText={inputPass}
           placeholder={"Password"}
-          //secureTextEntry={true}
+          secureTextEntry={true}
         />
         <TextInput 
           style={styles.input1}
           onChangeText={inputValidPass}
           placeholder={"Validate Password"}
-          //secureTextEntry={true}
+          secureTextEntry={true}
         />
         <TouchableOpacity style={styles.loginButton} onPress={handleSignup}>
           <Text style={styles.loginText}>Submit</Text>

@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Text, View, Image, TouchableOpacity, Button, FlatList } from 'react-native';
+import { Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
 import styles from '../shared/styles';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
@@ -10,6 +10,7 @@ export default function HomeScreen({ navigation }) {
   const [imageWidth, setImageW] = React.useState();
   const [data, setData] = React.useState([]);
   const [state, setState] = React.useState([]);
+  const [error, setError] = React.useState("");
   const user = navigation.getParam("user");
 
   useEffect(() => {
@@ -51,7 +52,8 @@ export default function HomeScreen({ navigation }) {
   };
 
   function getData1(){
-    axios.get("http://192.168.1.181:4545/imagefiles").then((response) => {
+    axios.get("http://192.168.1.181:4545/imagefiles")
+    .then((response) => {
       const myObjects = response.data;
       setData(myObjects);
     });
@@ -68,6 +70,7 @@ export default function HomeScreen({ navigation }) {
         setState((state) => [...state, data[i]]);
       }else{
         console.log("no data found!");
+        setError("No data found for user.");
       };
     };
     console.log("logging state array", state);
@@ -94,6 +97,9 @@ export default function HomeScreen({ navigation }) {
           <Text style={styles.headerText1}>Click here to upload an image to the application.</Text>
         </View>
       </TouchableOpacity>
+      <TouchableOpacity onPress={ () => setError("") }>
+        <Text style={styles.errorText}>{error}</Text>
+      </TouchableOpacity>
         {imageURI && (
           <>
           <View style={{alignSelf: 'center'}}>
@@ -116,8 +122,7 @@ export default function HomeScreen({ navigation }) {
                 <Image source={{ uri: item.imageURI }} style={{ width: 250, aspectRatio: 3 / 2, margin: 10 }} />
               )}
             />
-          </View>
-        )}  
+          </View>)}  
     </View>
   );
 }

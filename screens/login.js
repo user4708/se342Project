@@ -77,7 +77,7 @@ export default function LoginScreen({ navigation }) {
           onChangeText={inputPass}
           placeholder={"Password"}
           maxLength={16}
-          //secureTextEntry={true}
+          secureTextEntry={true}
         />
         {/* <TouchableOpacity>
           <Text style={styles.clickableText}>Forgot Password?</Text>
